@@ -30,12 +30,12 @@ spec:
             runAsUser: 100
             readOnlyRootFilesystem: true
           resources:
-          requests:
-            memory: "256Mi"
-            cpu: "200m"
-          limits:
-            memory: "512Mi"
-            cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "200m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
 ---
 apiVersion: v1
 kind: Service
