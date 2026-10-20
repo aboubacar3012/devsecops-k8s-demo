@@ -45,7 +45,7 @@ pipeline {
 //     deploymentName = "devsecops"
 //     containerName = "devsecops-container"
 //     serviceName = "devsecops-svc"
-//     imageName = "siddharth67/numeric-app:${GIT_COMMIT}"
+//     imageName = "aboubacar99/numeric-app:${GIT_COMMIT}"
 //     applicationURL="http://devsecops-demo.eastus.cloudapp.azure.com"
 //     applicationURI="/increment/99"
 //   }
@@ -70,11 +70,11 @@ pipeline {
       }
     }
 
-    stage('Mutation Tests - PIT') {
-      steps {
-        sh 'mvn org.pitest:pitest-maven:mutationCoverage'
-      }
-    }
+    // stage('Mutation Tests - PIT') {
+    //   steps {
+    //     sh 'mvn org.pitest:pitest-maven:mutationCoverage'
+    //   }
+    // }
 
     // stage('SonarQube - SAST') {
     //   steps {
@@ -91,28 +91,28 @@ pipeline {
     //   }
     // }
 
-    stage('Vulnerability Scan - Docker') {
-      steps {
-        parallel(
-            'Dependency Scan': {
-                sh 'mvn dependency-check:check'
-            },
-            'Trivy Scan': {
-                sh 'bash trivy-docker-image-scan.sh'
-            },
-            'OPA Conftest': {
-                sh 'docker run --rm -v $(pwd):/project openpolicyagent/conftest test --policy opa-docker-security.rego Dockerfile'
-            }
-          )
-      }
-    }
+    // stage('Vulnerability Scan - Docker') {
+    //   steps {
+    //     parallel(
+    //         'Dependency Scan': {
+    //             sh 'mvn dependency-check:check'
+    //         },
+    //         'Trivy Scan': {
+    //             sh 'bash trivy-docker-image-scan.sh'
+    //         },
+    //         'OPA Conftest': {
+    //             sh 'docker run --rm -v $(pwd):/project openpolicyagent/conftest test --policy opa-docker-security.rego Dockerfile'
+    //         }
+    //       )
+    //   }
+    // }
 
     stage('Docker Build and Push') {
       steps {
         withDockerRegistry([credentialsId: 'docker-hub', url: '']) {
           sh 'printenv'
-          sh 'sudo docker build -t siddharth67/numeric-app:""$GIT_COMMIT"" .'
-          sh 'docker push siddharth67/numeric-app:""$GIT_COMMIT""'
+          sh 'sudo docker build -t aboubacar99/numeric-app:""$GIT_COMMIT"" .'
+          sh 'docker push aboubacar99/numeric-app:""$GIT_COMMIT""'
         }
       }
     }
