@@ -42,14 +42,14 @@
 pipeline {
   agent any
 
-  // environment {
-  //   deploymentName = "devsecops"
-  //   containerName = "devsecops-container"
-  //   serviceName = "devsecops-svc"
-  //   imageName = "siddharth67/numeric-app:${GIT_COMMIT}"
-  //   applicationURL="http://devsecops-demo.eastus.cloudapp.azure.com"
-  //   applicationURI="/increment/99"
-  // }
+//   environment {
+//     deploymentName = "devsecops"
+//     containerName = "devsecops-container"
+//     serviceName = "devsecops-svc"
+//     imageName = "siddharth67/numeric-app:${GIT_COMMIT}"
+//     applicationURL="http://devsecops-demo.eastus.cloudapp.azure.com"
+//     applicationURI="/increment/99"
+//   }
 
   stages {
 
@@ -76,8 +76,8 @@ pipeline {
  //      steps {
  //        withSonarQubeEnv('SonarQube') {
  //          sh "mvn sonar:sonar \
-	// 	              -Dsonar.projectKey=numeric-application \
-	// 	              -Dsonar.host.url=http://devsecops-demo.eastus.cloudapp.azure.com:9000"
+    //                   -Dsonar.projectKey=numeric-application \
+    //                   -Dsonar.host.url=http://devsecops-demo.eastus.cloudapp.azure.com:9000"
  //        }
  //        timeout(time: 2, unit: 'MINUTES') {
  //          script {
@@ -87,19 +87,19 @@ pipeline {
  //      }
  //    }
 
-	// stage('Vulnerability Scan - Docker') {
+    // stage('Vulnerability Scan - Docker') {
  //      steps {
  //        parallel(
- //        	"Dependency Scan": {
- //        		sh "mvn dependency-check:check"
-	// 		},
-	// 		"Trivy Scan":{
-	// 			sh "bash trivy-docker-image-scan.sh"
-	// 		},
-	// 		"OPA Conftest":{
-	// 			sh 'docker run --rm -v $(pwd):/project openpolicyagent/conftest test --policy opa-docker-security.rego Dockerfile'
-	// 		}   	
- //      	)
+ //            "Dependency Scan": {
+ //                sh "mvn dependency-check:check"
+    //         },
+    //         "Trivy Scan":{
+    //             sh "bash trivy-docker-image-scan.sh"
+    //         },
+    //         "OPA Conftest":{
+    //             sh 'docker run --rm -v $(pwd):/project openpolicyagent/conftest test --policy opa-docker-security.rego Dockerfile'
+    //         }       
+ //          )
  //      }
  //    }
     
@@ -235,21 +235,21 @@ pipeline {
  //      }
  //    }   
    
-      stage('Testing Slack - 1') {
-      steps {
-          sh 'exit 0'
-      }
-    }
+    //   stage('Testing Slack - 1') {
+    //   steps {
+    //       sh 'exit 0'
+    //   }
+    // }
 
-   stage('Testing Slack - Error Stage') {
-      steps {
-          sh 'exit 0'
-      }
-    }
+//    stage('Testing Slack - Error Stage') {
+//       steps {
+//           sh 'exit 0'
+//       }
+//     }
 
   }
 
-  post { 
+//   post { 
      //    always { 
      //      junit 'target/surefire-reports/*.xml'
      //      jacoco execPattern: 'target/jacoco.exec'
@@ -257,28 +257,28 @@ pipeline {
      //      dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
      //      publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'owasp-zap-report', reportFiles: 'zap_report.html', reportName: 'OWASP ZAP HTML Report', reportTitles: 'OWASP ZAP HTML Report'])
         
- 		  // //Use sendNotifications.groovy from shared library and provide current build result as parameter 
+           // //Use sendNotifications.groovy from shared library and provide current build result as parameter 
      //      //sendNotification currentBuild.result
      //    }
 
         // success {
-        // 	script {
-		      //   /* Use slackNotifier.groovy from shared library and provide current build result as parameter */  
-		      //   env.failedStage = "none"
-		      //   env.emoji = ":white_check_mark: :tada: :thumbsup_all:" 
-		      //   sendNotification currentBuild.result
-		      // }
+        //     script {
+        //         /* Use slackNotifier.groovy from shared library and provide current build result as parameter */  
+        //         env.failedStage = "none"
+        //         env.emoji = ":white_check_mark: :tada: :thumbsup_all:" 
+        //         sendNotification currentBuild.result
+        //       }
         // }
 
-	    // failure {
-	    // 	script {
-			  // //Fetch information about  failed stage
-		   //    def failedStages = getFailedStages( currentBuild )
-	    //       env.failedStage = failedStages.failedStageName
-	    //       env.emoji = ":x: :red_circle: :sos:"
-		   //    sendNotification currentBuild.result
-		   //  }	
-	    // }
-    }
+        // failure {
+        //     script {
+        //       //Fetch information about  failed stage
+        //       def failedStages = getFailedStages( currentBuild )
+        //       env.failedStage = failedStages.failedStageName
+        //       env.emoji = ":x: :red_circle: :sos:"
+        //       sendNotification currentBuild.result
+        //     }    
+        // }
+    // }
 
 }
